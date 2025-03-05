@@ -36,22 +36,20 @@ export class SearchEngine {
 
   async search(query: string): Promise<{ answer: string; sources: SearchResultItem[] }> {
     try {
-      console.log("🔍 Search query sent to Tavily:", query);
-      console.log("🔍 Tavily search parameters:", {
+      // Create search parameters
+      const searchParams = {
+        query: query,
         max_results: 5,
-        search_depth: "advanced",
+        search_depth: "basic" as "basic" | "advanced",
         include_answer: true,
         include_domains: [".ro"],
-      });
+      };
+      
+      console.log("🔍 Search query sent to Tavily:", query);
+      console.log("🔍 Tavily search parameters:", searchParams);
       
       // Search with Tavily API
-      const searchResults = await this.tavilyClient.search({
-        query,
-        max_results: 10,
-        search_depth: "basic",
-        include_answer: true,
-        include_domains: [".ro"],
-      });
+      const searchResults = await this.tavilyClient.search(searchParams);
 
       console.log("📊 Full Tavily response:", JSON.stringify(searchResults, null, 2));
       
