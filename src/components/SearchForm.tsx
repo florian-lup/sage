@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { RiRobot2Fill } from "react-icons/ri";
 import { FiSearch } from "react-icons/fi";
 import { ImSpinner8 } from "react-icons/im";
+import { BsLightbulb } from "react-icons/bs";
 
 interface SearchFormProps {
   onSearch: (query: string) => Promise<void>;
@@ -25,6 +26,18 @@ export default function SearchForm({ onSearch, loading, initialQuery = "", compa
     await onSearch(query);
   };
 
+  // Flattened list of suggestions for a more compact display
+  const suggestions = [
+    "Ce este inteligența artificială?",
+    "Cum funcționează un motor de căutare?",
+    "Ce este machine learning?",
+    "Cum să învăț programare?",
+    "Locuri de vizitat în România",
+    "Beneficiile energiei regenerabile",
+    "Cum funcționează blockchain?",
+    "Practici pentru sănătate mentală"
+  ];
+
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <div className="relative">
@@ -37,7 +50,7 @@ export default function SearchForm({ onSearch, loading, initialQuery = "", compa
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Introdu întrebarea ta..."
+              placeholder="Intreaba orice..."
               className="flex-1 py-3 px-3 border-0 bg-transparent focus:outline-none focus:ring-0 text-base"
               disabled={loading}
             />
@@ -62,21 +75,28 @@ export default function SearchForm({ onSearch, loading, initialQuery = "", compa
       </div>
       
       {!compact && !loading && (
-        <div className="mt-6 flex flex-wrap gap-2 justify-center">
-          {["Ce este inteligența artificială?", "Cum funcționează un motor de căutare?", "Care sunt beneficiile energiei regenerabile?"].map((suggestion) => (
-            <button
-              key={suggestion}
-              type="button"
-              onClick={() => {
-                setQuery(suggestion);
-                onSearch(suggestion);
-              }}
-              disabled={loading}
-              className="btn-secondary"
-            >
-              {suggestion}
-            </button>
-          ))}
+        <div className="mt-6">
+          <div className="flex items-center mb-3 justify-center">
+            <BsLightbulb className="text-[var(--accent)] mr-2 h-4 w-4" />
+            <p className="text-xs font-medium text-[var(--muted)]">Întrebări populare</p>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-2">
+            {suggestions.map((suggestion) => (
+              <button
+                key={suggestion}
+                type="button"
+                onClick={() => {
+                  setQuery(suggestion);
+                  onSearch(suggestion);
+                }}
+                disabled={loading}
+                className="px-3 py-1.5 bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] rounded-full text-xs text-[var(--foreground)] transition-colors whitespace-nowrap"
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </form>

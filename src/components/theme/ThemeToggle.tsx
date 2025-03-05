@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { FiSun, FiMoon } from "react-icons/fi";
+import { FiSun, FiMoon, FiMonitor } from "react-icons/fi";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -18,16 +18,42 @@ export function ThemeToggle() {
   }
 
   return (
-    <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-full hover:bg-[var(--secondary)] transition-colors"
-      aria-label="Toggle theme"
-    >
-      {theme === "dark" ? (
-        <FiSun className="w-5 h-5" />
-      ) : (
-        <FiMoon className="w-5 h-5" />
-      )}
-    </button>
+    <div className="flex items-center bg-[var(--secondary)] rounded-full p-0.5 shadow-sm">
+      <button
+        onClick={() => setTheme("light")}
+        className={`p-1.5 rounded-full transition-colors ${
+          theme === "light" 
+            ? "bg-[var(--secondary-hover)] text-[var(--foreground)]" 
+            : "text-[var(--muted)] hover:text-[var(--foreground)]"
+        }`}
+        aria-label="Light theme"
+      >
+        <FiSun className="w-3.5 h-3.5" />
+      </button>
+      
+      <button
+        onClick={() => setTheme("dark")}
+        className={`p-1.5 rounded-full transition-colors ${
+          theme === "dark" 
+            ? "bg-[var(--secondary-hover)] text-[var(--foreground)]" 
+            : "text-[var(--muted)] hover:text-[var(--foreground)]"
+        }`}
+        aria-label="Dark theme"
+      >
+        <FiMoon className="w-3.5 h-3.5" />
+      </button>
+      
+      <button
+        onClick={() => setTheme("system")}
+        className={`p-1.5 rounded-full transition-colors ${
+          theme === "system" 
+            ? "bg-[var(--secondary-hover)] text-[var(--foreground)]" 
+            : "text-[var(--muted)] hover:text-[var(--foreground)]"
+        }`}
+        aria-label="System theme"
+      >
+        <FiMonitor className="w-3.5 h-3.5" />
+      </button>
+    </div>
   );
 } 
