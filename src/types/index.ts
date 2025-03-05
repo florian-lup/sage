@@ -9,4 +9,5 @@ export interface SearchResultItem {
 export interface SearchResultsProps {
   answer: string;
   sources: SearchResultItem[];
+  query?: string;
 } 
