@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Search Engine
+
+A Next.js application that uses Tavily API for searching Romanian domains and GPT-4o for generating concise answers in Romanian.
+
+## Features
+
+- Search for information using Tavily API
+- Focus on Romanian domains (.ro)
+- Generate concise answers in Romanian using GPT-4o
+- Display search results with source links
+
+## Technologies Used
+
+- Next.js
+- TypeScript
+- LangChain
+- Tavily API
+- OpenAI GPT-4o
+- TailwindCSS
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.x or higher
+- Tavily API key
+- OpenAI API key
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env.local` file in the root directory with the following variables:
+   ```
+   TAVILY_API_KEY=your_tavily_api_key
+   OPENAI_API_KEY=your_openai_api_key
+   ```
+
+### Running the Application
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Enter your query in the search box
+2. Click "Caută" (Search)
+3. View the generated answer in Romanian
+4. Browse the sources used to generate the answer
 
-## Learn More
+## Configuration
 
-To learn more about Next.js, take a look at the following resources:
+The search engine is configured with the following settings:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Maximum results: 5
+- Search depth: Advanced
+- Include domains: .ro (Romanian websites)
+- Language: Romanian
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
