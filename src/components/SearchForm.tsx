@@ -57,7 +57,7 @@ export default function SearchForm({ onSearch, loading, initialQuery = "", compa
             <button
               type="submit"
               disabled={loading || !query.trim()}
-              className={`m-1 rounded-full flex items-center justify-center transition-colors h-10 w-10 ${
+              className={`m-1 rounded-full flex items-center justify-center transition-colors h-10 w-10 cursor-pointer ${
                 query.trim() 
                   ? 'bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white' 
                   : 'bg-[var(--secondary)] text-[var(--muted)]'
@@ -91,7 +91,7 @@ export default function SearchForm({ onSearch, loading, initialQuery = "", compa
                   onSearch(suggestion);
                 }}
                 disabled={loading}
-                className="px-3 py-1.5 bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] rounded-full text-xs text-[var(--foreground)] transition-colors whitespace-nowrap"
+                className="px-3 py-1.5 bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] rounded-full text-xs text-[var(--foreground)] transition-colors whitespace-nowrap cursor-pointer"
               >
                 {suggestion}
               </button>

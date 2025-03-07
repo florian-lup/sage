@@ -21,7 +21,7 @@ export function ThemeToggle() {
     <div className="flex items-center bg-[var(--secondary)] rounded-full p-0.5 shadow-sm">
       <button
         onClick={() => setTheme("light")}
-        className={`p-1.5 rounded-full transition-colors ${
+        className={`p-1.5 rounded-full transition-colors cursor-pointer ${
           theme === "light" 
             ? "bg-[var(--secondary-hover)] text-[var(--foreground)]" 
             : "text-[var(--muted)] hover:text-[var(--foreground)]"
@@ -33,7 +33,7 @@ export function ThemeToggle() {
       
       <button
         onClick={() => setTheme("dark")}
-        className={`p-1.5 rounded-full transition-colors ${
+        className={`p-1.5 rounded-full transition-colors cursor-pointer ${
           theme === "dark" 
             ? "bg-[var(--secondary-hover)] text-[var(--foreground)]" 
             : "text-[var(--muted)] hover:text-[var(--foreground)]"
@@ -45,7 +45,7 @@ export function ThemeToggle() {
       
       <button
         onClick={() => setTheme("system")}
-        className={`p-1.5 rounded-full transition-colors ${
+        className={`p-1.5 rounded-full transition-colors cursor-pointer ${
           theme === "system" 
             ? "bg-[var(--secondary-hover)] text-[var(--foreground)]" 
             : "text-[var(--muted)] hover:text-[var(--foreground)]"

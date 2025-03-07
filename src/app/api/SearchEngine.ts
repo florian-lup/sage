@@ -62,7 +62,7 @@ export class SearchEngine {
         console.log(`  ${i+1}. ${source.title} (Score: ${source.score})`);
       });
 
-      // Generate a concise answer in Romanian
+      // Generate a concise answer in Romanian with formatting
       const prompt = `
         Bazat pe următoarele rezultate de căutare despre "${query}":
         
@@ -76,6 +76,16 @@ export class SearchEngine {
         Formulează un răspuns concis și informativ în limba română. 
         Răspunsul ar trebui să sintetizeze informațiile relevante din rezultatele căutării.
         Dacă rezultatele nu oferă informații suficiente, menționează acest lucru.
+        
+        Folosește următoarele elemente de formatare pentru a structura răspunsul:
+        1. Folosește "# " pentru titluri principale
+        2. Folosește "## " pentru subtitluri
+        3. Folosește "### " pentru titluri de nivel 3
+        4. Folosește "- " sau "* " pentru liste cu puncte
+        5. Folosește "1. ", "2. " etc. pentru liste numerotate
+        
+        Structurează răspunsul în mod clar, folosind titluri pentru secțiuni importante și liste pentru enumerări.
+        Asigură-te că răspunsul este bine organizat și ușor de citit.
       `;
 
       const response = await this.llmModel.invoke(prompt);
