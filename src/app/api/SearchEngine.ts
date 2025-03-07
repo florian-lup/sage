@@ -62,7 +62,7 @@ export class SearchEngine {
         console.log(`  ${i+1}. ${source.title} (Score: ${source.score})`);
       });
 
-      // Generate a concise answer in Romanian with formatting
+      // Generate a concise answer in Romanian with basic Markdown formatting
       const prompt = `
         Bazat pe următoarele rezultate de căutare despre "${query}":
         
@@ -77,15 +77,34 @@ export class SearchEngine {
         Răspunsul ar trebui să sintetizeze informațiile relevante din rezultatele căutării.
         Dacă rezultatele nu oferă informații suficiente, menționează acest lucru.
         
-        Folosește următoarele elemente de formatare pentru a structura răspunsul:
+        Folosește formatare Markdown de bază pentru a structura răspunsul:
         1. Folosește "# " pentru titluri principale
         2. Folosește "## " pentru subtitluri
         3. Folosește "### " pentru titluri de nivel 3
         4. Folosește "- " sau "* " pentru liste cu puncte
         5. Folosește "1. ", "2. " etc. pentru liste numerotate
+        6. Folosește "**text**" pentru text bold
+        7. Folosește "*text*" pentru text italic
+        8. Folosește "> text" pentru citate
         
         Structurează răspunsul în mod clar, folosind titluri pentru secțiuni importante și liste pentru enumerări.
         Asigură-te că răspunsul este bine organizat și ușor de citit.
+        
+        Exemple de formatare Markdown corectă:
+        
+        # Titlu principal
+        
+        Acesta este un paragraf cu **text bold** și *text italic*.
+        
+        ## Subtitlu
+        
+        - Punct 1 în listă
+        - Punct 2 în listă cu **text important**
+        
+        1. Primul element numerotat
+        2. Al doilea element numerotat
+        
+        > Acesta este un citat
       `;
 
       const response = await this.llmModel.invoke(prompt);
