@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SearchForm, SearchResults, ErrorMessage, PageHeader, PageFooter } from "../../components";
 import { SearchResultItem } from "../../types";
 
-export default function SearchPage() {
+// Create a separate component that uses useSearchParams
+function SearchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryParam = searchParams.get("q") || "";
@@ -60,38 +61,52 @@ export default function SearchPage() {
   };
 
   return (
+    <div className="search-container">
+      <div className="mb-6">
+        <SearchForm 
+          onSearch={handleSearch} 
+          loading={loading} 
+          initialQuery={query}
+          compact={true}
+        />
+      </div>
+      
+      <ErrorMessage message={error} />
+      
+      {loading && (
+        <div className="flex flex-col items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--primary)] border-t-transparent mb-4"></div>
+          <p className="text-[var(--muted)] text-sm">Se caută răspunsul...</p>
+        </div>
+      )}
+      
+      {!loading && !error && !answer && sources.length === 0 && queryParam && (
+        <div className="text-center py-12">
+          <p className="text-[var(--muted)] mb-2">Nu am găsit rezultate pentru căutarea ta.</p>
+          <p className="text-sm text-[var(--muted)]">Încearcă o altă întrebare.</p>
+        </div>
+      )}
+      
+      <SearchResults answer={answer} sources={sources} query={query} />
+    </div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function SearchPage() {
+  return (
     <div className="min-h-screen flex flex-col">
       <PageHeader showHomeLink={true} />
 
       <main className="flex-1 container py-4 pt-6">
-        <div className="search-container">
-          <div className="mb-6">
-            <SearchForm 
-              onSearch={handleSearch} 
-              loading={loading} 
-              initialQuery={query}
-              compact={true}
-            />
+        <Suspense fallback={
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--primary)] border-t-transparent mb-4"></div>
+            <p className="text-[var(--muted)] text-sm">Se încarcă...</p>
           </div>
-          
-          <ErrorMessage message={error} />
-          
-          {loading && (
-            <div className="flex flex-col items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--primary)] border-t-transparent mb-4"></div>
-              <p className="text-[var(--muted)] text-sm">Se caută răspunsul...</p>
-            </div>
-          )}
-          
-          {!loading && !error && !answer && sources.length === 0 && queryParam && (
-            <div className="text-center py-12">
-              <p className="text-[var(--muted)] mb-2">Nu am găsit rezultate pentru căutarea ta.</p>
-              <p className="text-sm text-[var(--muted)]">Încearcă o altă întrebare.</p>
-            </div>
-          )}
-          
-          <SearchResults answer={answer} sources={sources} query={query} />
-        </div>
+        }>
+          <SearchContent />
+        </Suspense>
       </main>
 
       <PageFooter />
