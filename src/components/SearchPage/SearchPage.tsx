@@ -6,7 +6,8 @@ import SearchResults from "./SearchResults";
 import ErrorMessage from "./ErrorMessage";
 import { SearchResultItem } from "../../types";
 
-export const SearchPage = () => {
+// Create a separate client component for search functionality
+const SearchContent = () => {
   const searchParams = useSearchParams();
   const queryParam = searchParams.get("q") || "";
   // Get domains from URL if present
@@ -72,6 +73,30 @@ export const SearchPage = () => {
   };
 
   return (
+    <div className="search-container">
+      <ErrorMessage message={error} />
+      
+      {loading && (
+        <div className="flex flex-col items-center justify-center py-8 px-6 backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-md">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--primary)] border-t-transparent mb-4"></div>
+          <p className="text-[var(--muted)] text-sm">Se caută răspunsul...</p>
+        </div>
+      )}
+      
+      {!loading && !error && !answer && sources.length === 0 && queryParam && (
+        <div className="text-center py-8 px-6 backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-md">
+          <p className="text-[var(--muted)] mb-2">Nu am găsit rezultate pentru căutarea ta.</p>
+          <p className="text-sm text-[var(--muted)]">Încearcă o altă întrebare.</p>
+        </div>
+      )}
+      
+      <SearchResults answer={answer} sources={sources} query={query} />
+    </div>
+  );
+};
+
+export const SearchPage = () => {
+  return (
     <div className="flex-1 container py-4 pt-6">
       <Suspense fallback={
         <div className="flex flex-col items-center justify-center py-8 px-6 backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-md">
@@ -79,25 +104,7 @@ export const SearchPage = () => {
           <p className="text-[var(--muted)] text-sm">Se încarcă...</p>
         </div>
       }>
-        <div className="search-container">
-          <ErrorMessage message={error} />
-          
-          {loading && (
-            <div className="flex flex-col items-center justify-center py-8 px-6 backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-md">
-              <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--primary)] border-t-transparent mb-4"></div>
-              <p className="text-[var(--muted)] text-sm">Se caută răspunsul...</p>
-            </div>
-          )}
-          
-          {!loading && !error && !answer && sources.length === 0 && queryParam && (
-            <div className="text-center py-8 px-6 backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-md">
-              <p className="text-[var(--muted)] mb-2">Nu am găsit rezultate pentru căutarea ta.</p>
-              <p className="text-sm text-[var(--muted)]">Încearcă o altă întrebare.</p>
-            </div>
-          )}
-          
-          <SearchResults answer={answer} sources={sources} query={query} />
-        </div>
+        <SearchContent />
       </Suspense>
     </div>
   );
