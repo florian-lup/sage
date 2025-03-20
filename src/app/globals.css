@@ -14,8 +14,9 @@
     --blue-600: #2563eb;
     --blue-400: #60a5fa;
     --green-400: #22c55e;
-    --primary: rgba(37, 99, 235, 0.9);
-    --primary-hover: rgba(29, 78, 216, 0.95);
+    --green-500: #16a34a;
+    --primary: rgba(34, 197, 94, 0.9);
+    --primary-hover: rgba(22, 163, 74, 0.95);
     --accent: var(--green-400);
 
     /* Gradients */
@@ -60,8 +61,8 @@
   .dark {
     --background: var(--background-dark);
     --foreground: var(--foreground-dark);
-    --primary: rgba(96, 165, 250, 0.8);
-    --primary-hover: rgba(147, 197, 253, 0.9);
+    --primary: rgba(34, 197, 94, 0.8);
+    --primary-hover: rgba(22, 163, 74, 0.9);
     --secondary: rgba(255, 255, 255, 0.08);
     --secondary-hover: rgba(255, 255, 255, 0.12);
     --accent: var(--green-400);
@@ -141,8 +142,7 @@ body {
     @apply flex h-12 w-full rounded-full border border-[var(--border)] bg-[var(--background)] px-4 py-2 text-base
     ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium 
     placeholder:text-[var(--muted)] focus-visible:outline-none focus-visible:ring-1 
-    focus-visible:ring-[var(--primary)] focus-visible:border-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-50
-    shadow-sm;
+    focus-visible:ring-[var(--primary)] focus-visible:border-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .card {
