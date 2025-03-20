@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RiRobot2Fill } from "react-icons/ri";
-import { FiSearch } from "react-icons/fi";
+import { RiRobot2Fill, RiCompass4Line } from "react-icons/ri";
 import { BsLightbulb } from "react-icons/bs";
 
 interface SearchFormProps {
@@ -36,7 +35,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
       <div className="relative">
         <div className={`overflow-hidden shadow-md rounded-full border border-[var(--border)] 
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg focus-within:shadow-lg'} 
-          transition-shadow duration-200 bg-white dark:bg-[var(--card)]`}>
+          transition-shadow duration-200 backdrop-blur-sm bg-[var(--card)]`}>
           <div className="flex items-center">
             <div className="pl-4 text-[var(--primary)]">
               <RiRobot2Fill className="h-5 w-5" />
@@ -52,14 +51,15 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
             <button
               type="submit"
               disabled={!query.trim() || disabled}
-              className={`m-1 rounded-full flex items-center justify-center transition-colors h-10 w-10 cursor-pointer ${
+              className={`m-1 rounded-full flex items-center justify-center transition-colors h-10 w-10 cursor-pointer backdrop-blur-sm ${
                 query.trim() && !disabled
-                  ? 'bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white' 
+                  ? 'hover:opacity-90 text-white' 
                   : 'bg-[var(--secondary)] text-[var(--muted)]'
               }`}
+              style={query.trim() && !disabled ? { background: 'var(--gradient-primary)' } : {}}
               aria-label="Caută"
             >
-              <FiSearch className="h-5 w-5" />
+              <RiCompass4Line className="h-5 w-5" />
             </button>
           </div>
         </div>
@@ -81,7 +81,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
                 onSearch(suggestion);
               }}
               disabled={disabled}
-              className="px-3 py-1.5 bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] rounded-full text-xs text-[var(--foreground)] transition-colors whitespace-nowrap cursor-pointer"
+              className="px-3 py-1.5 bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] rounded-full text-xs text-[var(--foreground)] transition-colors whitespace-nowrap cursor-pointer backdrop-blur-sm"
             >
               {suggestion}
             </button>

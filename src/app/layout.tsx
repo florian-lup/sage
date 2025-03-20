@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Search Engine - Caută informații în limba română",
-  description: "Motor de căutare AI care oferă răspunsuri concise la întrebări în limba română",
+  title: "Sage - Caută informații în limba română",
+  description: "Sage - Motor de căutare AI care oferă răspunsuri concise la întrebări în limba română",
   icons: {
     icon: '/favicon.ico',
   },

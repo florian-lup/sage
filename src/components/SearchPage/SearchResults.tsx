@@ -19,7 +19,7 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
   return (
     <div className="space-y-8 mt-4">
       {answer && (
-        <div className="bg-[var(--background)] rounded-xl">
+        <div className="backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 shadow-md">
           <div className="mb-4">
             <div className="flex items-center mb-3">
               <div className="h-6 w-6 rounded-full bg-[var(--primary)] flex items-center justify-center mr-2">
@@ -53,7 +53,7 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
       )}
 
       {sources.length > 0 && (
-        <div>
+        <div className="backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 shadow-md">
           <div className="flex items-center mb-4">
             <div className="h-6 w-6 rounded-full bg-[var(--secondary)] flex items-center justify-center mr-2">
               <HiOutlineDocumentText className="h-4 w-4 text-[var(--muted)]" />

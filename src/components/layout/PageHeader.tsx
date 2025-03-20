@@ -10,23 +10,27 @@ interface PageHeaderProps {
 export function PageHeader({ showHomeLink = false }: PageHeaderProps) {
   return (
     <header className="py-4">
-      <div className="container flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between">
         {showHomeLink ? (
           <Link 
             href="/"
-            className="text-xl font-medium bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] bg-clip-text text-transparent"
+            className="text-xl font-medium bg-clip-text text-transparent"
+            style={{ backgroundImage: 'var(--gradient-primary)' }}
           >
-            AI Search
+            Sage
           </Link>
         ) : (
-          <div className="text-xl font-medium bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] bg-clip-text text-transparent">
-            AI Search
+          <div 
+            className="text-xl font-medium bg-clip-text text-transparent"
+            style={{ backgroundImage: 'var(--gradient-primary)' }}
+          >
+            Sage
           </div>
         )}
         <div className="flex items-center space-x-4">
           <ThemeToggle />
           <a 
-            href="https://github.com/yourusername/ai-search-engine" 
+            href="https://github.com/florian-lup/sage" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors text-sm"
