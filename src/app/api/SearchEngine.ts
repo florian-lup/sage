@@ -34,16 +34,26 @@ export class SearchEngine {
     }
   }
 
-  async search(query: string): Promise<{ answer: string; sources: SearchResultItem[] }> {
+  async search(query: string, includeDomains?: string[]): Promise<{ answer: string; sources: SearchResultItem[] }> {
     try {
       // Create search parameters
-      const searchParams = {
+      const searchParams: {
+        query: string;
+        max_results: number;
+        search_depth: "basic" | "advanced";
+        include_answer: boolean;
+        include_domains?: string[];
+      } = {
         query: query,
         max_results: 5,
         search_depth: "basic" as "basic" | "advanced",
-        include_answer: true,
-        include_domains: [".ro"],
+        include_answer: false,
       };
+      
+      // Only add include_domains if it exists and has values
+      if (includeDomains && includeDomains.length > 0) {
+        searchParams.include_domains = includeDomains;
+      }
       
       console.log("🔍 Search query sent to Tavily:", query);
       console.log("🔍 Tavily search parameters:", searchParams);

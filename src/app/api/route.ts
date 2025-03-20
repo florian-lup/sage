@@ -3,8 +3,9 @@ import { SearchEngine } from "./SearchEngine";
 
 export async function POST(request: NextRequest) {
   try {
-    const { query } = await request.json();
+    const { query, includeDomains } = await request.json();
     console.log("🌐 API Request received with query:", query);
+    console.log("🌐 Domain extensions filter:", includeDomains || "None (searching all domains)");
 
     if (!query || typeof query !== "string") {
       console.log("⚠️ Invalid query received:", query);
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
     
     console.log("🚀 Executing search for:", query);
     const startTime = Date.now();
-    const result = await searchEngine.search(query);
+    const result = await searchEngine.search(query, includeDomains);
     const endTime = Date.now();
     
     console.log(`✅ Search completed in ${endTime - startTime}ms`);

@@ -3,7 +3,7 @@ import { BsLightningCharge } from "react-icons/bs";
 import SearchForm from "./SearchForm";
 
 interface HomePageProps {
-  onSearch: (searchQuery: string) => Promise<void>;
+  onSearch: (searchQuery: string, includeDomains?: string[]) => Promise<void>;
   loading: boolean;
 }
 

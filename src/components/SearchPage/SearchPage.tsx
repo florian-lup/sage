@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import SearchResults from "./SearchResults";
 import ErrorMessage from "./ErrorMessage";
@@ -9,6 +9,13 @@ import { SearchResultItem } from "../../types";
 export const SearchPage = () => {
   const searchParams = useSearchParams();
   const queryParam = searchParams.get("q") || "";
+  // Get domains from URL if present
+  const domainsParam = searchParams.get("domains") || "";
+  
+  // Memoize initialDomains to prevent re-renders
+  const initialDomains = useMemo(() => {
+    return domainsParam ? domainsParam.split(',') : undefined;
+  }, [domainsParam]);
   
   const [answer, setAnswer] = useState("");
   const [sources, setSources] = useState<SearchResultItem[]>([]);
@@ -16,27 +23,37 @@ export const SearchPage = () => {
   const [error, setError] = useState("");
   const [query, setQuery] = useState(queryParam);
 
-  // Fetch search results when the query parameter changes
+  // Fetch search results when query or domains change in URL
   useEffect(() => {
     if (queryParam) {
-      performSearch(queryParam);
+      performSearch(queryParam, initialDomains);
       setQuery(queryParam);
     }
-  }, [queryParam]);
+  }, [queryParam, initialDomains]);
 
-  const performSearch = async (searchQuery: string) => {
+  const performSearch = async (searchQuery: string, includeDomains?: string[]) => {
     setLoading(true);
     setError("");
     setAnswer("");
     setSources([]);
     
     try {
+      // Create request body with optional includeDomains parameter
+      const requestBody: { query: string; includeDomains?: string[] } = {
+        query: searchQuery
+      };
+      
+      // Only add includeDomains if it exists and has values
+      if (includeDomains && includeDomains.length > 0) {
+        requestBody.includeDomains = includeDomains;
+      }
+      
       const response = await fetch("/api", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ query: searchQuery }),
+        body: JSON.stringify(requestBody),
       });
       
       if (!response.ok) {
