@@ -13,44 +13,43 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return null;
-  }
-
   return (
     <div className="flex items-center bg-[var(--secondary)] rounded-full p-0.5 shadow-sm">
       <button
-        onClick={() => setTheme("light")}
-        className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-          theme === "light" 
+        onClick={() => mounted && setTheme("light")}
+        className={`p-1.5 rounded-full transition-colors ${mounted ? "cursor-pointer" : "cursor-default"} ${
+          mounted && theme === "light" 
             ? "bg-[var(--secondary-hover)] text-[var(--foreground)]" 
             : "text-[var(--muted)] hover:text-[var(--foreground)]"
         }`}
         aria-label="Light theme"
+        disabled={!mounted}
       >
         <FiSun className="w-3.5 h-3.5" />
       </button>
       
       <button
-        onClick={() => setTheme("dark")}
-        className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-          theme === "dark" 
+        onClick={() => mounted && setTheme("dark")}
+        className={`p-1.5 rounded-full transition-colors ${mounted ? "cursor-pointer" : "cursor-default"} ${
+          mounted && theme === "dark" 
             ? "bg-[var(--secondary-hover)] text-[var(--foreground)]" 
             : "text-[var(--muted)] hover:text-[var(--foreground)]"
         }`}
         aria-label="Dark theme"
+        disabled={!mounted}
       >
         <FiMoon className="w-3.5 h-3.5" />
       </button>
       
       <button
-        onClick={() => setTheme("system")}
-        className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-          theme === "system" 
+        onClick={() => mounted && setTheme("system")}
+        className={`p-1.5 rounded-full transition-colors ${mounted ? "cursor-pointer" : "cursor-default"} ${
+          mounted && theme === "system" 
             ? "bg-[var(--secondary-hover)] text-[var(--foreground)]" 
             : "text-[var(--muted)] hover:text-[var(--foreground)]"
         }`}
         aria-label="System theme"
+        disabled={!mounted}
       >
         <FiMonitor className="w-3.5 h-3.5" />
       </button>

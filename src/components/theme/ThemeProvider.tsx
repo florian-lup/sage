@@ -8,6 +8,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       attribute="class"
       defaultTheme="system"
       enableSystem
+      enableColorScheme
+      storageKey="sage-theme"
+      disableTransitionOnChange
     >
       {children}
     </NextThemesProvider>
