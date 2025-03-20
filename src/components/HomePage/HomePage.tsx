@@ -42,7 +42,7 @@ export const HomePage = ({ onSearch, loading }: HomePageProps) => {
       <div className="w-full max-w-2xl">
         <SearchForm 
           onSearch={onSearch} 
-          loading={loading} 
+          disabled={loading}
         />
       </div>
     </div>

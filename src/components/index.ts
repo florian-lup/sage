@@ -13,4 +13,4 @@ export { PageFooter } from './layout';
 export { HomePage, SearchForm } from './HomePage';
 
 // SearchPage components
-export { SearchPage, SearchContent, SearchResults, ErrorMessage } from './SearchPage'; 
+export { SearchPage, SearchResults, ErrorMessage } from './SearchPage'; 
