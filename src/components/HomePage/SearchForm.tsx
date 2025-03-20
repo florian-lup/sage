@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { RiRobot2Fill } from "react-icons/ri";
 import { FiSearch } from "react-icons/fi";
 import { ImSpinner8 } from "react-icons/im";
@@ -9,16 +9,10 @@ import { BsLightbulb } from "react-icons/bs";
 interface SearchFormProps {
   onSearch: (query: string) => Promise<void>;
   loading: boolean;
-  initialQuery?: string;
-  compact?: boolean;
 }
 
-export default function SearchForm({ onSearch, loading, initialQuery = "", compact = false }: SearchFormProps) {
-  const [query, setQuery] = useState(initialQuery);
-
-  useEffect(() => {
-    setQuery(initialQuery);
-  }, [initialQuery]);
+export default function SearchForm({ onSearch, loading }: SearchFormProps) {
+  const [query, setQuery] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,7 +68,7 @@ export default function SearchForm({ onSearch, loading, initialQuery = "", compa
         </div>
       </div>
       
-      {!compact && !loading && (
+      {!loading && (
         <div className="mt-6">
           <div className="flex items-center mb-3 justify-center">
             <BsLightbulb className="text-[var(--accent)] mr-2 h-4 w-4" />

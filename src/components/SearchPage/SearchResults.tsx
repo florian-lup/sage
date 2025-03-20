@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchResultItem } from "../types";
+import { SearchResultItem } from "../../types";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import ReactMarkdown from "react-markdown";

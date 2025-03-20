@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ThemeToggle } from "./theme/ThemeToggle";
+import { ThemeToggle } from "../theme/ThemeToggle";
 
 interface PageHeaderProps {
   showHomeLink?: boolean;
