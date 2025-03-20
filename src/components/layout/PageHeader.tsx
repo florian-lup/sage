@@ -10,7 +10,7 @@ interface PageHeaderProps {
 export function PageHeader({ showHomeLink = false }: PageHeaderProps) {
   return (
     <header className="py-4">
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="max-w-[95%] mx-auto flex items-center justify-between">
         {showHomeLink ? (
           <Link 
             href="/"

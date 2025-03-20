@@ -101,12 +101,10 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
   // Flattened list of suggestions for a more compact display
   const suggestions = [
     "Ce este inteligența artificială?",
-    "Cum funcționează un motor de căutare?",
+    "Cat de des sa mergi la sala?",
     "Ce este machine learning?",
-    "Cum să învăț programare?",
     "Locuri de vizitat în România",
     "Beneficiile energiei regenerabile",
-    "Cum funcționează blockchain?",
     "Practici pentru sănătate mentală"
   ];
 
@@ -194,7 +192,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
           <p className="text-xs font-medium text-[var(--muted)]">Întrebări populare</p>
         </div>
         
-        <div className="flex flex-wrap justify-center gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 w-full">
           {suggestions.map((suggestion) => (
             <button
               key={suggestion}
@@ -209,7 +207,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
                 }
               }}
               disabled={disabled}
-              className="px-3 py-1.5 bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] rounded-full text-xs text-[var(--foreground)] transition-colors whitespace-nowrap cursor-pointer backdrop-blur-sm"
+              className="px-3 py-1.5 bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] rounded-full text-xs text-[var(--foreground)] transition-colors text-center overflow-hidden text-ellipsis cursor-pointer backdrop-blur-sm"
             >
               {suggestion}
             </button>
