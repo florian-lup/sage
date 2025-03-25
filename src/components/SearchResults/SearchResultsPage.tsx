@@ -7,7 +7,7 @@ import ErrorMessage from "./ErrorMessage";
 import { SearchResultItem } from "../../types";
 
 // Create a separate client component for search functionality
-const SearchContent = () => {
+const SearchResultsContent = () => {
   const searchParams = useSearchParams();
   const queryParam = searchParams.get("q") || "";
   // Get domains from URL if present
@@ -95,7 +95,7 @@ const SearchContent = () => {
   );
 };
 
-export const SearchPage = () => {
+export const SearchResultsPage = () => {
   return (
     <div className="flex-1 container py-4 pt-6">
       <Suspense fallback={
@@ -104,7 +104,7 @@ export const SearchPage = () => {
           <p className="text-[var(--muted)] text-sm">Loading...</p>
         </div>
       }>
-        <SearchContent />
+        <SearchResultsContent />
       </Suspense>
     </div>
   );

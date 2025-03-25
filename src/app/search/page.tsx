@@ -1,11 +1,11 @@
 "use client";
 
-import { Layout, SearchPage } from "../../components";
+import { Layout, SearchResultsPage } from "../../components";
 
 export default function SearchPageRoute() {
   return (
     <Layout showHomeLink={true}>
-      <SearchPage />
+      <SearchResultsPage />
     </Layout>
   );
 } 

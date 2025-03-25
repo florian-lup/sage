@@ -12,7 +12,7 @@ export const HomePage = ({ onSearch, loading }: HomePageProps) => {
     <div className="flex flex-col items-center justify-center min-h-[70vh]">
       <div className="text-center mb-10 max-w-2xl">
         <h2 className="text-3xl md:text-4xl font-medium mb-6 leading-tight">
-          Intelligent answers <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-primary)' }}>in English</span>
+          AI-powered <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-primary)' }}>web research</span>
         </h2>
         
         <div className="flex flex-col md:flex-row justify-center gap-6 mb-8">
@@ -20,7 +20,7 @@ export const HomePage = ({ onSearch, loading }: HomePageProps) => {
             <div className="bg-[var(--secondary)] p-2 rounded-full mr-3">
               <RiTranslate2 className="h-5 w-5 text-[var(--blue-600)]" />
             </div>
-            <p className="text-sm text-[var(--foreground)]">English content</p>
+            <p className="text-sm text-[var(--foreground)]">Multilingual support</p>
           </div>
           
           <div className="flex items-center">

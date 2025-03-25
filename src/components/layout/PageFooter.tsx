@@ -9,11 +9,13 @@ export function PageFooter() {
             Sage © {new Date().getFullYear()}
           </p>
           <div className="flex space-x-4 mt-2 sm:mt-0">
-            <a href="#" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-              Terms
-            </a>
-            <a href="#" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-              Privacy
+            <a 
+              href="https://github.com/florian-lup/sage" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+            >
+              GitHub
             </a>
           </div>
         </div>

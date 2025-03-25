@@ -29,14 +29,6 @@ export function PageHeader({ showHomeLink = false }: PageHeaderProps) {
         )}
         <div className="flex items-center space-x-4">
           <ThemeToggle />
-          <a 
-            href="https://github.com/florian-lup/sage" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors text-sm"
-          >
-            GitHub
-          </a>
         </div>
       </div>
     </header>
