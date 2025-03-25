@@ -8,7 +8,7 @@ export const HomePage = ({ onSearch, loading }: HomePageProps) => {
     <div className="flex flex-col items-center justify-center min-h-[70vh]">
       <div className="text-center mb-10 max-w-2xl">
         <h2 className="text-3xl md:text-4xl font-medium mb-6 leading-tight">
-          AI-powered <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-primary)' }}>web research</span>
+          Conversational <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-primary)' }}>web research</span>
         </h2>
         
         <div className="flex flex-col md:flex-row justify-center gap-6 mb-8">
