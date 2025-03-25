@@ -81,6 +81,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
     { value: ".lu", label: ".lu" },
     { value: ".cy", label: ".cy" },
     { value: ".mt", label: ".mt" },
+    { value: ".tr", label: ".tr" },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -136,7 +137,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
                 <Select.Portal>
                   <Select.Content 
                     position="popper" 
-                    className="z-50 min-w-[8rem] max-h-[300px] overflow-hidden bg-[var(--card)] rounded-lg border border-[var(--border)] shadow-md"
+                    className="z-50 min-w-[8rem] max-h-[250px] overflow-hidden bg-[var(--card)] rounded-lg border border-[var(--border)] shadow-md"
                     sideOffset={5}
                   >
                     <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[var(--card)] cursor-default sticky top-0 z-10 border-b border-[var(--border)]">
