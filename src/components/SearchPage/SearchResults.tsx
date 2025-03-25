@@ -6,6 +6,27 @@ import { BsQuestionCircleFill } from "react-icons/bs";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { IoSend } from "react-icons/io5";
 import ReactMarkdown from "react-markdown";
+import { Components } from "react-markdown";
+
+// Reusable markdown components configuration
+const markdownComponents: Components = {
+  h1: (props) => <h1 className="text-2xl font-bold mb-4 text-[var(--foreground)] border-b pb-2 border-[var(--border)]" {...props} />,
+  h2: (props) => <h2 className="text-xl font-bold mb-3 text-[var(--foreground)] mt-6" {...props} />,
+  h3: (props) => <h3 className="text-lg font-bold mb-2 text-[var(--foreground)] mt-4" {...props} />,
+  h4: (props) => <h4 className="text-base font-bold mb-2 text-[var(--foreground)] mt-3" {...props} />,
+  h5: (props) => <h5 className="text-sm font-bold mb-1 text-[var(--foreground)] mt-3" {...props} />, 
+  h6: (props) => <h6 className="text-xs font-bold mb-1 text-[var(--foreground)] mt-2" {...props} />,
+  p: (props) => <p className="mb-4 last:mb-0 text-[var(--foreground)] leading-relaxed" {...props} />,
+  ul: (props) => <ul className="mb-4 pl-5 space-y-2 list-disc marker:text-[var(--primary)]" {...props} />,
+  ol: (props) => <ol className="mb-4 pl-5 space-y-2 list-decimal marker:text-[var(--primary)]" {...props} />,
+  li: (props) => <li className="text-[var(--foreground)] pl-1" {...props} />,
+  a: (props) => <a className="text-[var(--primary)] hover:underline transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
+  strong: (props) => <strong className="font-bold text-[var(--foreground)]" {...props} />,
+  em: (props) => <em className="italic text-[var(--foreground)]" {...props} />,
+  blockquote: (props) => <blockquote className="pl-4 border-l-4 border-[var(--primary)] opacity-90 my-4 italic" {...props} />,
+  code: (props) => <code className="bg-[var(--secondary)] px-1.5 py-0.5 rounded font-mono text-sm" {...props} />,
+  pre: (props) => <pre className="bg-[var(--secondary)] p-4 rounded-md font-mono text-sm overflow-x-auto my-4 border border-[var(--border)]" {...props} />
+};
 
 interface SearchResultsProps {
   answer: string;
@@ -65,23 +86,7 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
               <span className="text-sm font-medium">Answer for: <span className="text-[var(--primary)]">{query}</span></span>
             </div>
             <div className="prose prose-sm sm:prose max-w-none dark:prose-invert">
-              <ReactMarkdown 
-                components={{
-                  h1: (props) => <h1 className="text-2xl font-bold mb-3 text-[var(--foreground)]" {...props} />,
-                  h2: (props) => <h2 className="text-xl font-bold mb-2 text-[var(--foreground)]" {...props} />,
-                  h3: (props) => <h3 className="text-lg font-bold mb-2 text-[var(--foreground)]" {...props} />,
-                  p: (props) => <p className="mb-4 last:mb-0 text-[var(--foreground)] leading-relaxed" {...props} />,
-                  ul: (props) => <ul className="mb-4 pl-5 space-y-2" {...props} />,
-                  ol: (props) => <ol className="mb-4 pl-5 space-y-2 list-decimal" {...props} />,
-                  li: (props) => <li className="text-[var(--foreground)]" {...props} />,
-                  a: (props) => <a className="text-[var(--primary)] hover:underline" {...props} />,
-                  strong: (props) => <strong className="font-bold" {...props} />,
-                  em: (props) => <em className="italic" {...props} />,
-                  blockquote: (props) => <blockquote className="pl-4 border-l-4 border-[var(--muted)] italic my-4" {...props} />,
-                  code: (props) => <code className="bg-[var(--secondary)] px-1 py-0.5 rounded text-sm" {...props} />,
-                  pre: (props) => <pre className="bg-[var(--secondary)] p-3 rounded-md text-sm overflow-x-auto my-4" {...props} />
-                }}
-              >
+              <ReactMarkdown components={markdownComponents}>
                 {answer}
               </ReactMarkdown>
             </div>
@@ -116,23 +121,7 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
           {followUpAnswer && (
             <div className="mt-6 pt-4 border-t border-[var(--border)]">
               <div className="prose prose-sm sm:prose max-w-none dark:prose-invert">
-                <ReactMarkdown 
-                  components={{
-                    h1: (props) => <h1 className="text-2xl font-bold mb-3 text-[var(--foreground)]" {...props} />,
-                    h2: (props) => <h2 className="text-xl font-bold mb-2 text-[var(--foreground)]" {...props} />,
-                    h3: (props) => <h3 className="text-lg font-bold mb-2 text-[var(--foreground)]" {...props} />,
-                    p: (props) => <p className="mb-4 last:mb-0 text-[var(--foreground)] leading-relaxed" {...props} />,
-                    ul: (props) => <ul className="mb-4 pl-5 space-y-2" {...props} />,
-                    ol: (props) => <ol className="mb-4 pl-5 space-y-2 list-decimal" {...props} />,
-                    li: (props) => <li className="text-[var(--foreground)]" {...props} />,
-                    a: (props) => <a className="text-[var(--primary)] hover:underline" {...props} />,
-                    strong: (props) => <strong className="font-bold" {...props} />,
-                    em: (props) => <em className="italic" {...props} />,
-                    blockquote: (props) => <blockquote className="pl-4 border-l-4 border-[var(--muted)] italic my-4" {...props} />,
-                    code: (props) => <code className="bg-[var(--secondary)] px-1 py-0.5 rounded text-sm" {...props} />,
-                    pre: (props) => <pre className="bg-[var(--secondary)] p-3 rounded-md text-sm overflow-x-auto my-4" {...props} />
-                  }}
-                >
+                <ReactMarkdown components={markdownComponents}>
                   {followUpAnswer}
                 </ReactMarkdown>
               </div>

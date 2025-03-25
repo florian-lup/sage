@@ -99,38 +99,33 @@ export class SearchEngine {
             `
           ).join('\n\n')}
           
-          Formulate a concise and informative answer in English.
+          Formulate a concise and informative answer in the same language as the search results.
           The answer should synthesize relevant information from the search results.
           If the results don't provide sufficient information, mention this.
+          Do not include any inline citations, references, or source numbers in your answer.
           
-          Use basic Markdown formatting to structure the answer:
-          1. Use "# " for main titles
-          2. Use "## " for subtitles
-          3. Use "### " for level 3 titles
-          4. Use "- " or "* " for bullet lists
-          5. Use "1. ", "2. " etc. for numbered lists
-          6. Use "**text**" for bold text
-          7. Use "*text*" for italic text
-          8. Use "> text" for quotes
+          Use Markdown formatting to structure the answer clearly:
+          1. Use "# " for main titles (use only one main title at the beginning)
+          2. Use "## " for subtitles to organize major sections
+          3. Use "### " for level 3 titles within sections
+          4. Use "#### ", "##### ", "###### " for deeper heading levels if needed
+          5. Use "- " or "* " for bullet lists
+          6. Use "1. ", "2. " etc. for numbered lists
+          7. Use "**text**" for bold text to emphasize important information
+          8. Use "*text*" for italic text
+          9. Use "> text" for quotes or important notes
+          10. For code snippets or technical terms, use \`code\` for inline code
+          11. For longer code blocks, use triple backticks:
+              \`\`\`
+              code block here
+              \`\`\`
           
-          Structure the answer clearly, using titles for important sections and lists for enumerations.
-          Make sure the answer is well organized and easy to read.
-          
-          Examples of correct Markdown formatting:
-          
-          # Main Title
-          
-          This is a paragraph with **bold text** and *italic text*.
-          
-          ## Subtitle
-          
-          - Point 1 in list
-          - Point 2 in list with **important text**
-          
-          1. First numbered item
-          2. Second numbered item
-          
-          > This is a quote
+          Structure your answer with:
+          - A clear main title (use # only once at the top)
+          - Logical sections with subtitles (##, ###)
+          - Short paragraphs with clear transitions
+          - Lists for enumerated points or steps
+          - Bold text to highlight key terms and concepts
         `;
 
         // Store initial question and answer in memory
