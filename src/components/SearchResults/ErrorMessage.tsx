@@ -1,24 +1,19 @@
 "use client";
 
-import { BiErrorCircle } from "react-icons/bi";
-
-interface ErrorMessageProps {
-  message: string;
-}
+import { ErrorMessageProps } from "../../types/components";
 
 export default function ErrorMessage({ message }: ErrorMessageProps) {
   if (!message) return null;
-
+  
   return (
-    <div className="mb-6 rounded-lg backdrop-blur-sm border border-red-200 dark:border-red-900/30 bg-red-50/90 dark:bg-red-900/20 p-4 shadow-sm">
-      <div className="flex items-start">
-        <div className="h-6 w-6 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mr-2 flex-shrink-0">
-          <BiErrorCircle className="h-4 w-4 text-red-500 dark:text-red-400" />
-        </div>
-        <div>
-          <p className="text-sm text-red-600 dark:text-red-400">{message}</p>
-        </div>
+    <div className="mb-6 p-4 backdrop-blur-sm bg-[var(--card)] border border-red-300 rounded-xl shadow-md">
+      <div className="flex items-center">
+        <svg className="h-5 w-5 text-red-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+        </svg>
+        <span className="text-sm font-semibold text-[var(--foreground)]">Error</span>
       </div>
+      <p className="mt-2 text-sm text-[var(--foreground)]">{message}</p>
     </div>
   );
 } 

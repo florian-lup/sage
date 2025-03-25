@@ -1,11 +1,7 @@
 import { RiRobot2Line, RiTranslate2 } from "react-icons/ri";
 import { BsLightningCharge } from "react-icons/bs";
 import SearchForm from "./SearchForm";
-
-interface HomePageProps {
-  onSearch: (searchQuery: string, includeDomains?: string[]) => Promise<void>;
-  loading: boolean;
-}
+import { HomePageProps } from "../../types/components";
 
 export const HomePage = ({ onSearch, loading }: HomePageProps) => {
   return (

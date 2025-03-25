@@ -5,109 +5,32 @@ import { BiSearch } from "react-icons/bi";
 import { BsLightbulb } from "react-icons/bs";
 import * as Select from "@radix-ui/react-select";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
-
-interface SearchFormProps {
-  onSearch: (query: string, includeDomains?: string[]) => Promise<void>;
-  disabled?: boolean;
-}
+import { useDomainFilter, useSearchSuggestions } from "../../hooks";
+import { SearchFormProps } from "../../types/components";
+import { DomainOption } from "../../types/hooks";
 
 export default function SearchForm({ onSearch, disabled = false }: SearchFormProps) {
   const [query, setQuery] = useState("");
-  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
+  const { 
+    selectedDomain, 
+    setSelectedDomain, 
+    domainOptions, 
+    getSelectedLabel,
+    getIncludeDomains
+  } = useDomainFilter();
   
-  const domainOptions = [
-    { value: null, label: "All" },
-    // Popular TLDs
-    { value: ".com", label: ".com" },
-    { value: ".org", label: ".org" },
-    { value: ".net", label: ".net" },
-    { value: ".io", label: ".io" },
-    { value: ".info", label: ".info" },
-    { value: ".edu", label: ".edu" },
-    { value: ".gov", label: ".gov" },
-    { value: ".ai", label: ".ai" },
-    { value: ".app", label: ".app" },
-    { value: ".dev", label: ".dev" },
-    { value: ".co", label: ".co" },
-    { value: ".tech", label: ".tech" },
-    { value: ".me", label: ".me" },
-    { value: ".biz", label: ".biz" },
-    { value: ".shop", label: ".shop" },
-    { value: ".blog", label: ".blog" },
-    { value: ".cloud", label: ".cloud" },
-    { value: ".online", label: ".online" },
-    { value: ".site", label: ".site" },
-    // Country-specific domains
-    { value: ".ro", label: ".ro" },
-    { value: ".co.uk", label: ".co.uk" },
-    { value: ".eu", label: ".eu" },
-    { value: ".de", label: ".de" },
-    { value: ".fr", label: ".fr" },
-    { value: ".es", label: ".es" },
-    { value: ".it", label: ".it" },
-    { value: ".us", label: ".us" },
-    { value: ".ca", label: ".ca" },
-    { value: ".au", label: ".au" },
-    { value: ".nz", label: ".nz" },
-    { value: ".jp", label: ".jp" },
-    { value: ".cn", label: ".cn" },
-    { value: ".in", label: ".in" },
-    { value: ".br", label: ".br" },
-    { value: ".mx", label: ".mx" },
-    { value: ".za", label: ".za" },
-    { value: ".ru", label: ".ru" },
-    { value: ".nl", label: ".nl" },
-    { value: ".se", label: ".se" },
-    { value: ".ch", label: ".ch" },
-    { value: ".at", label: ".at" },
-    { value: ".pl", label: ".pl" },
-    { value: ".be", label: ".be" },
-    { value: ".dk", label: ".dk" },
-    { value: ".fi", label: ".fi" },
-    { value: ".gr", label: ".gr" },
-    { value: ".hu", label: ".hu" },
-    { value: ".ie", label: ".ie" },
-    { value: ".no", label: ".no" },
-    { value: ".pt", label: ".pt" },
-    { value: ".cz", label: ".cz" },
-    { value: ".ua", label: ".ua" },
-    { value: ".hr", label: ".hr" },
-    { value: ".bg", label: ".bg" },
-    { value: ".sk", label: ".sk" },
-    { value: ".si", label: ".si" },
-    { value: ".lt", label: ".lt" },
-    { value: ".lv", label: ".lv" },
-    { value: ".ee", label: ".ee" },
-    { value: ".lu", label: ".lu" },
-    { value: ".cy", label: ".cy" },
-    { value: ".mt", label: ".mt" },
-    { value: ".tr", label: ".tr" },
-  ];
+  const { suggestions } = useSearchSuggestions();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim() || disabled) return;
     
-    // Pass selected domain as an array if it exists, otherwise don't pass it
-    if (selectedDomain) {
-      await onSearch(query, [selectedDomain]);
-    } else {
-      await onSearch(query);
-    }
+    // Use getIncludeDomains from the hook
+    await onSearch(query, getIncludeDomains());
   };
 
-  // Find the label for the currently selected domain value
-  const selectedLabel = domainOptions.find(option => option.value === selectedDomain)?.label || "All";
-
-  // Flattened list of suggestions for a more compact display
-  const suggestions = [
-    "What is artificial intelligence?",
-    "How often should I work out?",
-    "What is machine learning?",
-    "Places to visit in Romania",
-    "Benefits of renewable energy",
-    "Mental health practices"
-  ];
+  // Get the selected label using the hook helper
+  const selectedLabel = getSelectedLabel();
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
@@ -145,7 +68,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
                     </Select.ScrollUpButton>
                     
                     <Select.Viewport className="overflow-auto">
-                      {domainOptions.map((domain) => (
+                      {domainOptions.map((domain: DomainOption) => (
                         <Select.Item
                           key={domain.label}
                           value={domain.value === null ? "all" : domain.value}
@@ -194,18 +117,14 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 w-full">
-          {suggestions.map((suggestion) => (
+          {suggestions.map((suggestion: string) => (
             <button
               key={suggestion}
               type="button"
               onClick={() => {
                 setQuery(suggestion);
-                // Handle suggestion click with current domain selection
-                if (selectedDomain) {
-                  onSearch(suggestion, [selectedDomain]);
-                } else {
-                  onSearch(suggestion);
-                }
+                // Use getIncludeDomains from the hook
+                onSearch(suggestion, getIncludeDomains());
               }}
               disabled={disabled}
               className="px-3 py-1.5 bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] rounded-full text-xs text-[var(--foreground)] transition-colors text-center overflow-hidden text-ellipsis cursor-pointer backdrop-blur-sm"

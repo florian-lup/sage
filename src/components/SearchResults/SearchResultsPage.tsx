@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import SearchResults from "./SearchResults";
 import ErrorMessage from "./ErrorMessage";
-import { SearchResultItem } from "../../types";
+import { useSearch } from "../../hooks";
 
 // Create a separate client component for search functionality
 const SearchResultsContent = () => {
@@ -18,11 +18,8 @@ const SearchResultsContent = () => {
     return domainsParam ? domainsParam.split(',') : undefined;
   }, [domainsParam]);
   
-  const [answer, setAnswer] = useState("");
-  const [sources, setSources] = useState<SearchResultItem[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [query, setQuery] = useState(queryParam);
+  const { answer, sources, loading, error, performSearch } = useSearch();
 
   // Fetch search results when query or domains change in URL
   useEffect(() => {
@@ -30,47 +27,7 @@ const SearchResultsContent = () => {
       performSearch(queryParam, initialDomains);
       setQuery(queryParam);
     }
-  }, [queryParam, initialDomains]);
-
-  const performSearch = async (searchQuery: string, includeDomains?: string[]) => {
-    setLoading(true);
-    setError("");
-    setAnswer("");
-    setSources([]);
-    
-    try {
-      // Create request body with optional includeDomains parameter
-      const requestBody: { query: string; includeDomains?: string[] } = {
-        query: searchQuery
-      };
-      
-      // Only add includeDomains if it exists and has values
-      if (includeDomains && includeDomains.length > 0) {
-        requestBody.includeDomains = includeDomains;
-      }
-      
-      const response = await fetch("/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "An error occurred during the search.");
-      }
-      
-      const data = await response.json();
-      setAnswer(data.answer);
-      setSources(data.sources);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred during the search.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [queryParam, initialDomains, performSearch]);
 
   return (
     <div className="search-container">

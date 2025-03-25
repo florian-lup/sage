@@ -4,7 +4,9 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { BaseChatModel } from "@langchain/core/language_models/chat_models";
 import { BufferMemory } from "langchain/memory";
 import { ConversationChain } from "langchain/chains";
-import { SearchResultItem } from "../../types";
+import { SearchResultItem, SearchResponse } from "../../types/search";
+import { TavilySearchParams } from "../../types/api";
+import { AIModelType } from "../../types/models";
 
 export class SearchEngine {
   private tavilyClient: TavilyClient;
@@ -22,7 +24,7 @@ export class SearchEngine {
     this.memory = new BufferMemory();
 
     // Determine which model to use based on environment variable
-    const modelType = process.env.AI_MODEL?.toLowerCase() || 'openai';
+    const modelType = (process.env.AI_MODEL?.toLowerCase() || 'openai') as AIModelType;
     
     // Initialize the selected LLM model
     if (modelType === 'gemini') {
@@ -47,20 +49,14 @@ export class SearchEngine {
     });
   }
 
-  async search(query: string, includeDomains?: string[], isFollowUp: boolean = false): Promise<{ answer: string; sources: SearchResultItem[] }> {
+  async search(query: string, includeDomains?: string[], isFollowUp: boolean = false): Promise<SearchResponse> {
     try {
       // Skip search for follow-up questions
       let sources: SearchResultItem[] = [];
       
       if (!isFollowUp) {
         // Create search parameters
-        const searchParams: {
-          query: string;
-          max_results: number;
-          search_depth: "basic" | "advanced";
-          include_answer: boolean;
-          include_domains?: string[];
-        } = {
+        const searchParams: TavilySearchParams = {
           query: query,
           max_results: 10,
           search_depth: "basic" as "basic" | "advanced",

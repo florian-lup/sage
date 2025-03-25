@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SearchEngine } from "./SearchEngine";
+import { SearchRequestBody } from "../../types/api";
+import { SearchResponse } from "../../types/search";
 
 // Create a global instance of the search engine to maintain memory across requests
 let globalSearchEngine: SearchEngine | null = null;
 
 export async function POST(request: NextRequest) {
   try {
-    const { query, includeDomains, isFollowUp = false } = await request.json();
+    const { query, includeDomains, isFollowUp = false } = await request.json() as SearchRequestBody;
     console.log("🌐 API Request received with query:", query);
 
     if (!query || typeof query !== "string") {
@@ -23,7 +25,7 @@ export async function POST(request: NextRequest) {
     }
     
     const startTime = Date.now();
-    const result = await globalSearchEngine.search(query, includeDomains, isFollowUp);
+    const result: SearchResponse = await globalSearchEngine.search(query, includeDomains, isFollowUp);
     const endTime = Date.now();
     
     console.log(`✅ Search completed in ${endTime - startTime}ms`);

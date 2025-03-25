@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { SearchResultItem } from "../../types";
+import { SearchResultsProps } from "../../types/components";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { IoSend } from "react-icons/io5";
 import ReactMarkdown from "react-markdown";
 import { Components } from "react-markdown";
+import { useFollowUpQuestion } from "../../hooks";
 
 // Reusable markdown components configuration
 const markdownComponents: Components = {
@@ -28,51 +28,18 @@ const markdownComponents: Components = {
   pre: (props) => <pre className="bg-[var(--secondary)] p-4 rounded-md font-mono text-sm overflow-x-auto my-4 border border-[var(--border)]" {...props} />
 };
 
-interface SearchResultsProps {
-  answer: string;
-  sources: SearchResultItem[];
-  query?: string;
-}
-
 export default function SearchResults({ answer, sources, query = "" }: SearchResultsProps) {
-  const [followUpQuery, setFollowUpQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [followUpAnswer, setFollowUpAnswer] = useState("");
+  const { 
+    followUpQuery, 
+    followUpAnswer, 
+    isLoading, 
+    setFollowUpQuery,
+    handleFollowUpQuestion 
+  } = useFollowUpQuestion();
 
   if (!answer && sources.length === 0) {
     return null;
   }
-
-  const handleFollowUpQuestion = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!followUpQuery.trim()) return;
-    
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: followUpQuery,
-          isFollowUp: true
-        }),
-      });
-      
-      if (!response.ok) {
-        throw new Error("Failed to get answer");
-      }
-      
-      const data = await response.json();
-      setFollowUpAnswer(data.answer);
-    } catch (error) {
-      console.error("Error asking follow-up question:", error);
-    } finally {
-      setIsLoading(false);
-      setFollowUpQuery("");
-    }
-  };
 
   return (
     <div className="space-y-8 mt-4">
