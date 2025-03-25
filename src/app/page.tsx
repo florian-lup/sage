@@ -11,7 +11,7 @@ export default function Home() {
   const handleSearch = async (searchQuery: string, includeDomains?: string[]) => {
     setLoading(true);
     // Create the base URL with the search query
-    let url = `/search?q=${encodeURIComponent(searchQuery)}`;
+    let url = `/results?q=${encodeURIComponent(searchQuery)}`;
     
     // Add domain filter to URL if specified
     if (includeDomains && includeDomains.length > 0) {
