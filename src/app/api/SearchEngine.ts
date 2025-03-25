@@ -72,49 +72,49 @@ export class SearchEngine {
         console.log(`  ${i+1}. ${source.title} (Score: ${source.score})`);
       });
 
-      // Generate a concise answer in Romanian with basic Markdown formatting
+      // Generate a concise answer in English with basic Markdown formatting
       const prompt = `
-        Bazat pe următoarele rezultate de căutare despre "${query}":
+        Based on the following search results about "${query}":
         
         ${sources.map((source, index) => 
           `[${index + 1}] ${source.title}
            URL: ${source.url}
-           Conținut: ${source.content}
+           Content: ${source.content}
           `
         ).join('\n\n')}
         
-        Formulează un răspuns concis și informativ în limba română. 
-        Răspunsul ar trebui să sintetizeze informațiile relevante din rezultatele căutării.
-        Dacă rezultatele nu oferă informații suficiente, menționează acest lucru.
+        Formulate a concise and informative answer in English.
+        The answer should synthesize relevant information from the search results.
+        If the results don't provide sufficient information, mention this.
         
-        Folosește formatare Markdown de bază pentru a structura răspunsul:
-        1. Folosește "# " pentru titluri principale
-        2. Folosește "## " pentru subtitluri
-        3. Folosește "### " pentru titluri de nivel 3
-        4. Folosește "- " sau "* " pentru liste cu puncte
-        5. Folosește "1. ", "2. " etc. pentru liste numerotate
-        6. Folosește "**text**" pentru text bold
-        7. Folosește "*text*" pentru text italic
-        8. Folosește "> text" pentru citate
+        Use basic Markdown formatting to structure the answer:
+        1. Use "# " for main titles
+        2. Use "## " for subtitles
+        3. Use "### " for level 3 titles
+        4. Use "- " or "* " for bullet lists
+        5. Use "1. ", "2. " etc. for numbered lists
+        6. Use "**text**" for bold text
+        7. Use "*text*" for italic text
+        8. Use "> text" for quotes
         
-        Structurează răspunsul în mod clar, folosind titluri pentru secțiuni importante și liste pentru enumerări.
-        Asigură-te că răspunsul este bine organizat și ușor de citit.
+        Structure the answer clearly, using titles for important sections and lists for enumerations.
+        Make sure the answer is well organized and easy to read.
         
-        Exemple de formatare Markdown corectă:
+        Examples of correct Markdown formatting:
         
-        # Titlu principal
+        # Main Title
         
-        Acesta este un paragraf cu **text bold** și *text italic*.
+        This is a paragraph with **bold text** and *italic text*.
         
-        ## Subtitlu
+        ## Subtitle
         
-        - Punct 1 în listă
-        - Punct 2 în listă cu **text important**
+        - Point 1 in list
+        - Point 2 in list with **important text**
         
-        1. Primul element numerotat
-        2. Al doilea element numerotat
+        1. First numbered item
+        2. Second numbered item
         
-        > Acesta este un citat
+        > This is a quote
       `;
 
       const response = await this.llmModel.invoke(prompt);
@@ -125,7 +125,7 @@ export class SearchEngine {
       };
     } catch (error) {
       console.error("❌ Error in search:", error);
-      throw new Error("A apărut o eroare în timpul căutării.");
+      throw new Error("An error occurred during the search.");
     }
   }
 }

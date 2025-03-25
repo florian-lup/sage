@@ -16,7 +16,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
   
   const domainOptions = [
-    { value: null, label: "Toate" },
+    { value: null, label: "All" },
     // Popular TLDs
     { value: ".com", label: ".com" },
     { value: ".org", label: ".org" },
@@ -97,16 +97,16 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
   };
 
   // Find the label for the currently selected domain value
-  const selectedLabel = domainOptions.find(option => option.value === selectedDomain)?.label || "Toate";
+  const selectedLabel = domainOptions.find(option => option.value === selectedDomain)?.label || "All";
 
   // Flattened list of suggestions for a more compact display
   const suggestions = [
-    "Ce este inteligența artificială?",
-    "Cat de des sa mergi la sala?",
-    "Ce este machine learning?",
-    "Locuri de vizitat în România",
-    "Beneficiile energiei regenerabile",
-    "Practici pentru sănătate mentală"
+    "What is artificial intelligence?",
+    "How often should I work out?",
+    "What is machine learning?",
+    "Places to visit in Romania",
+    "Benefits of renewable energy",
+    "Mental health practices"
   ];
 
   return (
@@ -167,7 +167,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Intreaba orice..."
+              placeholder="Ask anything..."
               className="flex-1 py-3 px-3 border-0 bg-transparent focus:outline-none focus:ring-0 text-base placeholder:text-[var(--muted)]"
               disabled={disabled}
             />
@@ -179,7 +179,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
                   ? 'text-[var(--accent)] hover:bg-[var(--secondary)]' 
                   : 'bg-transparent text-[var(--muted)]'
               }`}
-              aria-label="Caută"
+              aria-label="Search"
             >
               <BiSearch className="h-5 w-5" />
             </button>
@@ -190,7 +190,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
       <div className="mt-6">
         <div className="flex items-center mb-3 justify-center">
           <BsLightbulb className="text-[var(--accent)] mr-2 h-4 w-4" />
-          <p className="text-xs font-medium text-[var(--muted)]">Întrebări populare</p>
+          <p className="text-xs font-medium text-[var(--muted)]">Popular questions</p>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 w-full">

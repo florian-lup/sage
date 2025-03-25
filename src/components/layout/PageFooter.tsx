@@ -10,10 +10,10 @@ export function PageFooter() {
           </p>
           <div className="flex space-x-4 mt-2 sm:mt-0">
             <a href="#" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-              Termeni
+              Terms
             </a>
             <a href="#" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-              Confidențialitate
+              Privacy
             </a>
           </div>
         </div>

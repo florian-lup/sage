@@ -1,13 +1,13 @@
 # AI Search Engine
 
-A Next.js application that uses Tavily API for searching Romanian domains and GPT-4o for generating concise answers in Romanian.
+A Next.js application that uses Tavily API for searching and GPT-4o for generating concise answers in English.
 
 ## Features
 
 - Search for information using Tavily API
-- Focus on Romanian domains (.ro)
-- Generate concise answers in Romanian using GPT-4o
+- Generate concise answers in English using GPT-4o
 - Display search results with source links
+- Filter results by domain extensions
 
 ## Technologies Used
 
@@ -50,8 +50,8 @@ The application will be available at http://localhost:3000.
 ## Usage
 
 1. Enter your query in the search box
-2. Click "Caută" (Search)
-3. View the generated answer in Romanian
+2. Click "Search"
+3. View the generated answer in English
 4. Browse the sources used to generate the answer
 
 ## Configuration
@@ -60,8 +60,8 @@ The search engine is configured with the following settings:
 
 - Maximum results: 5
 - Search depth: Advanced
-- Include domains: .ro (Romanian websites)
-- Language: Romanian
+- Optional domain filtering
+- Language: English
 
 ## License
 

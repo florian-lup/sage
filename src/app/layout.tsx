@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sage - Caută informații în limba română",
-  description: "Sage - Motor de căutare AI care oferă răspunsuri concise la întrebări în limba română",
+  title: "Sage - Search for information in English",
+  description: "Sage - AI search engine providing concise answers to questions in English",
   icons: {
     icon: '/favicon.ico',
   },
@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ro" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >

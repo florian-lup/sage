@@ -25,7 +25,7 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
               <div className="h-6 w-6 rounded-full bg-[var(--primary)] flex items-center justify-center mr-2">
                 <BsQuestionCircleFill className="h-4 w-4 text-white" />
               </div>
-              <span className="text-sm font-medium">Răspuns pentru: <span className="text-[var(--primary)]">{query}</span></span>
+              <span className="text-sm font-medium">Answer for: <span className="text-[var(--primary)]">{query}</span></span>
             </div>
             <div className="prose prose-sm sm:prose max-w-none dark:prose-invert">
               <ReactMarkdown 
@@ -58,7 +58,7 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
             <div className="h-6 w-6 rounded-full bg-[var(--secondary)] flex items-center justify-center mr-2">
               <HiOutlineDocumentText className="h-4 w-4 text-[var(--muted)]" />
             </div>
-            <span className="text-sm font-medium text-[var(--muted)]">Surse web ({sources.length})</span>
+            <span className="text-sm font-medium text-[var(--muted)]">Web sources ({sources.length})</span>
           </div>
           
           <div className="space-y-4">
@@ -71,7 +71,7 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
                 className="block hover:bg-[var(--secondary)] rounded-lg p-3 transition-colors"
               >
                 <div className="mb-1 text-[var(--primary)] text-sm font-medium line-clamp-1 hover:underline">
-                  {source.title || 'Sursă fără titlu'}
+                  {source.title || 'Untitled source'}
                 </div>
                 <div className="text-xs text-[var(--muted)] mb-2 line-clamp-1">
                   {source.url}

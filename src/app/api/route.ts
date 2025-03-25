@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     if (!query || typeof query !== "string") {
       console.log("⚠️ Invalid query received:", query);
       return NextResponse.json(
-        { error: "Vă rugăm să furnizați o interogare validă." },
+        { error: "Please provide a valid query." },
         { status: 400 }
       );
     }
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("❌ Error in search API:", error);
     return NextResponse.json(
-      { error: "A apărut o eroare în timpul procesării cererii." },
+      { error: "An error occurred while processing the request." },
       { status: 500 }
     );
   }
