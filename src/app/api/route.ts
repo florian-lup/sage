@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SearchEngine } from "./SearchEngine";
 
+// Create a global instance of the search engine to maintain memory across requests
+let globalSearchEngine: SearchEngine | null = null;
+
 export async function POST(request: NextRequest) {
   try {
-    const { query, includeDomains } = await request.json();
+    const { query, includeDomains, isFollowUp = false } = await request.json();
     console.log("🌐 API Request received with query:", query);
-    console.log("🌐 Domain extensions filter:", includeDomains || "None (searching all domains)");
 
     if (!query || typeof query !== "string") {
       console.log("⚠️ Invalid query received:", query);
@@ -15,17 +17,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log("🔄 Initializing search engine...");
-    const searchEngine = new SearchEngine();
+    // Use singleton pattern to maintain memory across requests
+    if (!globalSearchEngine) {
+      globalSearchEngine = new SearchEngine();
+    }
     
-    console.log("🚀 Executing search for:", query);
     const startTime = Date.now();
-    const result = await searchEngine.search(query, includeDomains);
+    const result = await globalSearchEngine.search(query, includeDomains, isFollowUp);
     const endTime = Date.now();
     
     console.log(`✅ Search completed in ${endTime - startTime}ms`);
-    console.log(`📝 Answer length: ${result.answer.length} characters`);
-    console.log(`📚 Number of sources: ${result.sources.length}`);
 
     return NextResponse.json(result);
   } catch (error) {

@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { SearchResultItem } from "../../types";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { HiOutlineDocumentText } from "react-icons/hi";
+import { IoSend } from "react-icons/io5";
 import ReactMarkdown from "react-markdown";
 
 interface SearchResultsProps {
@@ -12,9 +14,44 @@ interface SearchResultsProps {
 }
 
 export default function SearchResults({ answer, sources, query = "" }: SearchResultsProps) {
+  const [followUpQuery, setFollowUpQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [followUpAnswer, setFollowUpAnswer] = useState("");
+
   if (!answer && sources.length === 0) {
     return null;
   }
+
+  const handleFollowUpQuestion = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!followUpQuery.trim()) return;
+    
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: followUpQuery,
+          isFollowUp: true
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to get answer");
+      }
+      
+      const data = await response.json();
+      setFollowUpAnswer(data.answer);
+    } catch (error) {
+      console.error("Error asking follow-up question:", error);
+    } finally {
+      setIsLoading(false);
+      setFollowUpQuery("");
+    }
+  };
 
   return (
     <div className="space-y-8 mt-4">
@@ -49,6 +86,58 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
               </ReactMarkdown>
             </div>
           </div>
+          
+          {/* Follow-up question input */}
+          <div className="mt-6 pt-4 border-t border-[var(--border)]">
+            <form onSubmit={handleFollowUpQuestion} className="flex items-center">
+              <input
+                type="text"
+                value={followUpQuery}
+                onChange={(e) => setFollowUpQuery(e.target.value)}
+                placeholder="Ask a follow-up question..."
+                className="w-full px-4 py-2 rounded-lg bg-[var(--secondary)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                className="ml-2 p-2 rounded-lg bg-[var(--primary)] text-white disabled:opacity-50"
+                disabled={isLoading || !followUpQuery.trim()}
+              >
+                {isLoading ? (
+                  <div className="h-5 w-5 rounded-full border-2 border-t-transparent border-white animate-spin"></div>
+                ) : (
+                  <IoSend className="h-5 w-5" />
+                )}
+              </button>
+            </form>
+          </div>
+          
+          {/* Follow-up answer display */}
+          {followUpAnswer && (
+            <div className="mt-6 pt-4 border-t border-[var(--border)]">
+              <div className="prose prose-sm sm:prose max-w-none dark:prose-invert">
+                <ReactMarkdown 
+                  components={{
+                    h1: (props) => <h1 className="text-2xl font-bold mb-3 text-[var(--foreground)]" {...props} />,
+                    h2: (props) => <h2 className="text-xl font-bold mb-2 text-[var(--foreground)]" {...props} />,
+                    h3: (props) => <h3 className="text-lg font-bold mb-2 text-[var(--foreground)]" {...props} />,
+                    p: (props) => <p className="mb-4 last:mb-0 text-[var(--foreground)] leading-relaxed" {...props} />,
+                    ul: (props) => <ul className="mb-4 pl-5 space-y-2" {...props} />,
+                    ol: (props) => <ol className="mb-4 pl-5 space-y-2 list-decimal" {...props} />,
+                    li: (props) => <li className="text-[var(--foreground)]" {...props} />,
+                    a: (props) => <a className="text-[var(--primary)] hover:underline" {...props} />,
+                    strong: (props) => <strong className="font-bold" {...props} />,
+                    em: (props) => <em className="italic" {...props} />,
+                    blockquote: (props) => <blockquote className="pl-4 border-l-4 border-[var(--muted)] italic my-4" {...props} />,
+                    code: (props) => <code className="bg-[var(--secondary)] px-1 py-0.5 rounded text-sm" {...props} />,
+                    pre: (props) => <pre className="bg-[var(--secondary)] p-3 rounded-md text-sm overflow-x-auto my-4" {...props} />
+                  }}
+                >
+                  {followUpAnswer}
+                </ReactMarkdown>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
