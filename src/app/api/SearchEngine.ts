@@ -95,33 +95,27 @@ export class SearchEngine {
             `
           ).join('\n\n')}
           
-          Formulate a concise and informative answer in the same language as the search results.
-          The answer should synthesize relevant information from the search results.
-          If the results don't provide sufficient information, mention this.
-          Do not include any inline citations, references, or source numbers in your answer.
+          Formulate a comprehensive and informative answer following these guidelines:
+
+          1. Content and Structure:
+          - Start with a clear, concise main title that captures the essence of the query
+          - Organize information logically with appropriate section headings
+          - Present information in a clear, hierarchical structure
+          - Use short paragraphs with clear transitions between ideas
           
-          Use Markdown formatting to structure the answer clearly:
-          1. Use "# " for main titles (use only one main title at the beginning)
-          2. Use "## " for subtitles to organize major sections
-          3. Use "### " for level 3 titles within sections
-          4. Use "#### ", "##### ", "###### " for deeper heading levels if needed
-          5. Use "- " or "* " for bullet lists
-          6. Use "1. ", "2. " etc. for numbered lists
-          7. Use "**text**" for bold text to emphasize important information
-          8. Use "*text*" for italic text
-          9. Use "> text" for quotes or important notes
-          10. For code snippets or technical terms, use \`code\` for inline code
-          11. For longer code blocks, use triple backticks:
-              \`\`\`
-              code block here
-              \`\`\`
+          2. Information Handling:
+          - Synthesize information from multiple sources to provide a complete picture
+          - If sources contain conflicting information, acknowledge the discrepancies
+          - For technical queries, include relevant technical details while maintaining readability
+          - For general knowledge queries, focus on key concepts and practical applications
           
-          Structure your answer with:
-          - A clear main title (use # only once at the top)
-          - Logical sections with subtitles (##, ###)
-          - Short paragraphs with clear transitions
-          - Lists for enumerated points or steps
-          - Bold text to highlight key terms and concepts
+          Remember to:
+          - Keep the answer focused and relevant to the query
+          - Use appropriate formatting to improve readability
+          - Maintain consistency in style and tone throughout
+          - Provide clear explanations for complex concepts
+          - Respond in the same language as the results
+          - Don't include citations or links in the answer
         `;
 
         // Store initial question and answer in memory
