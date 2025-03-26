@@ -7,7 +7,7 @@ import { useFetch } from "./useFetch";
 export function useSearch(): UseSearchResult {
   const [answer, setAnswer] = useState("");
   const [sources, setSources] = useState<SearchResultItem[]>([]);
-  const { loading, error, fetchData } = useFetch<SearchResponse>();
+  const { loading, error, fetchData, abortRequest } = useFetch<SearchResponse>();
   const activeSearchRef = useRef<string>("");
 
   const performSearch = useCallback(async (query: string) => {
@@ -51,6 +51,7 @@ export function useSearch(): UseSearchResult {
     sources,
     loading,
     error,
-    performSearch
+    performSearch,
+    abortSearch: abortRequest
   };
 } 

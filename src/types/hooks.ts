@@ -7,6 +7,7 @@ export interface UseSearchResult {
   loading: boolean;
   error: string;
   performSearch: (query: string) => Promise<void>;
+  abortSearch: () => void;
 }
 
 export interface UseFollowUpQuestionResult {

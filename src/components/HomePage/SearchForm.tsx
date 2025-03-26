@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsLightbulb } from "react-icons/bs";
+import { IoMdClose } from "react-icons/io";
 import { useSearchSuggestions } from "../../hooks";
 import { SearchFormProps } from "../../types/components";
 
@@ -15,6 +16,10 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
     if (!query.trim() || disabled) return;
     
     await onSearch(query);
+  };
+
+  const clearInput = () => {
+    setQuery("");
   };
 
   return (
@@ -32,6 +37,16 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
               className="flex-1 py-2.5 sm:py-3 px-4 sm:px-5 border-0 bg-transparent focus:outline-none focus:ring-0 text-[16px] sm:text-base placeholder:text-[var(--muted)]"
               disabled={disabled}
             />
+            {query.trim() && !disabled && (
+              <button
+                type="button"
+                onClick={clearInput}
+                className="flex items-center justify-center transition-all h-9 sm:h-10 w-9 sm:w-10 cursor-pointer rounded-full text-[var(--muted)] hover:bg-[var(--secondary)]"
+                aria-label="Clear input"
+              >
+                <IoMdClose className="h-4 w-4 sm:h-5 sm:w-5" />
+              </button>
+            )}
             <button
               type="submit"
               disabled={!query.trim() || disabled}
