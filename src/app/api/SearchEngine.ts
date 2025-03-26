@@ -68,8 +68,6 @@ export class SearchEngine {
           searchParams.include_domains = includeDomains;
         }
         
-        console.log("🔍 Search query sent to Tavily:", query);
-        
         // Search with Tavily API
         const searchResults = await this.tavilyClient.search(searchParams);
         
@@ -133,8 +131,7 @@ export class SearchEngine {
         answer: answerText,
         sources,
       };
-    } catch (error) {
-      console.error("❌ Error in search:", error);
+    } catch {
       throw new Error("An error occurred during the search.");
     }
   }
