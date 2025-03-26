@@ -119,6 +119,16 @@ body {
   background: var(--scrollbar-thumb-hover);
 }
 
+/* Hide scrollbar but maintain functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
 @layer components {
   .container {
     @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;

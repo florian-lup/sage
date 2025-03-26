@@ -8,15 +8,21 @@ export interface SearchResultsProps {
 }
 
 export interface SearchFormProps {
-  onSearch: (query: string, includeDomains?: string[]) => Promise<void>;
+  onSearch: (query: string) => Promise<void>;
   disabled?: boolean;
 }
 
 export interface HomePageProps {
-  onSearch: (searchQuery: string, includeDomains?: string[]) => Promise<void>;
+  onSearch: (searchQuery: string) => Promise<void>;
   loading: boolean;
 }
 
 export interface ErrorMessageProps {
   message: string;
+}
+
+export interface SearchContainerProps {
+  isOpen: boolean;
+  onClose: () => void;
+  initialQuery: string;
 } 

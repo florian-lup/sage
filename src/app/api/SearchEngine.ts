@@ -49,7 +49,7 @@ export class SearchEngine {
     });
   }
 
-  async search(query: string, includeDomains?: string[], isFollowUp: boolean = false): Promise<SearchResponse> {
+  async search(query: string, isFollowUp: boolean = false): Promise<SearchResponse> {
     try {
       // Skip search for follow-up questions
       let sources: SearchResultItem[] = [];
@@ -60,13 +60,7 @@ export class SearchEngine {
           query: query,
           max_results: 10,
           search_depth: "basic" as "basic" | "advanced",
-          include_answer: false,
         };
-        
-        // Only add include_domains if it exists and has values
-        if (includeDomains && includeDomains.length > 0) {
-          searchParams.include_domains = includeDomains;
-        }
         
         // Search with Tavily API
         const searchResults = await this.tavilyClient.search(searchParams);

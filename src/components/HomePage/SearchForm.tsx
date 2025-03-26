@@ -3,34 +3,19 @@
 import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsLightbulb } from "react-icons/bs";
-import * as Select from "@radix-ui/react-select";
-import { IoChevronDown, IoChevronUp } from "react-icons/io5";
-import { useDomainFilter, useSearchSuggestions } from "../../hooks";
+import { useSearchSuggestions } from "../../hooks";
 import { SearchFormProps } from "../../types/components";
-import { DomainOption } from "../../types/hooks";
 
 export default function SearchForm({ onSearch, disabled = false }: SearchFormProps) {
   const [query, setQuery] = useState("");
-  const { 
-    selectedDomain, 
-    setSelectedDomain, 
-    domainOptions, 
-    getSelectedLabel,
-    getIncludeDomains
-  } = useDomainFilter();
-  
   const { suggestions } = useSearchSuggestions();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim() || disabled) return;
     
-    // Use getIncludeDomains from the hook
-    await onSearch(query, getIncludeDomains());
+    await onSearch(query);
   };
-
-  // Get the selected label using the hook helper
-  const selectedLabel = getSelectedLabel();
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
@@ -39,59 +24,12 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
           ${disabled ? 'opacity-50 cursor-not-allowed' : ''} 
           transition-all duration-200 backdrop-blur-sm bg-[var(--card)] shadow-[0_2px_4px_rgba(0,0,0,0.05)]`}>
           <div className="flex items-center">
-            <div className="pl-2 sm:pl-4">
-              <Select.Root 
-                value={selectedDomain || "all"}
-                onValueChange={(value) => setSelectedDomain(value === "all" ? null : value)}
-                disabled={disabled}
-              >
-                <Select.Trigger 
-                  className="flex items-center justify-center text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors focus:outline-none cursor-pointer w-[3.5rem] sm:w-[4rem]"
-                  aria-label="Domain extensions"
-                >
-                  <Select.Value>
-                    <span className="text-xs font-medium mr-1 flex items-center truncate">{selectedLabel}</span>
-                  </Select.Value>
-                  <Select.Icon className="flex items-center">
-                    <IoChevronDown className="h-3 w-3" />
-                  </Select.Icon>
-                </Select.Trigger>
-                
-                <Select.Portal>
-                  <Select.Content 
-                    position="popper" 
-                    className="z-50 min-w-[8rem] max-h-[250px] overflow-hidden bg-[var(--card)] rounded-lg border border-[var(--border)] shadow-md"
-                    sideOffset={5}
-                  >
-                    <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[var(--card)] cursor-default sticky top-0 z-10 border-b border-[var(--border)]">
-                      <IoChevronUp />
-                    </Select.ScrollUpButton>
-                    
-                    <Select.Viewport className="overflow-auto">
-                      {domainOptions.map((domain: DomainOption) => (
-                        <Select.Item
-                          key={domain.label}
-                          value={domain.value === null ? "all" : domain.value}
-                          className="relative flex items-center h-8 px-4 py-2 text-xs hover:bg-[var(--secondary)] text-[var(--foreground)] transition-colors cursor-pointer outline-none"
-                        >
-                          <Select.ItemText>{domain.label}</Select.ItemText>
-                        </Select.Item>
-                      ))}
-                    </Select.Viewport>
-                    
-                    <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[var(--card)] cursor-default sticky bottom-0 z-10 border-t border-[var(--border)]">
-                      <IoChevronDown />
-                    </Select.ScrollDownButton>
-                  </Select.Content>
-                </Select.Portal>
-              </Select.Root>
-            </div>
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Ask anything..."
-              className="flex-1 py-2.5 sm:py-3 px-2 sm:px-3 border-0 bg-transparent focus:outline-none focus:ring-0 text-[16px] sm:text-base placeholder:text-[var(--muted)]"
+              className="flex-1 py-2.5 sm:py-3 px-4 sm:px-5 border-0 bg-transparent focus:outline-none focus:ring-0 text-[16px] sm:text-base placeholder:text-[var(--muted)]"
               disabled={disabled}
             />
             <button
@@ -123,7 +61,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
               type="button"
               onClick={() => {
                 setQuery(suggestion);
-                onSearch(suggestion, getIncludeDomains());
+                onSearch(suggestion);
               }}
               disabled={disabled}
               className="px-2 sm:px-3 py-1 sm:py-1.5 bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] rounded-full text-xs text-[var(--foreground)] transition-colors text-center overflow-hidden text-ellipsis cursor-pointer backdrop-blur-sm"

@@ -1,30 +1,34 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Layout, HomePage } from "../components";
+import { useState, useCallback } from "react";
+import { Layout, HomePage, SearchContainer } from "../components";
 
 export default function Home() {
-  const router = useRouter();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSearch = async (searchQuery: string, includeDomains?: string[]) => {
+  const handleSearch = useCallback(async (searchQuery: string) => {
     setLoading(true);
-    // Create the base URL with the search query
-    let url = `/results?q=${encodeURIComponent(searchQuery)}`;
     
-    // Add domain filter to URL if specified
-    if (includeDomains && includeDomains.length > 0) {
-      url += `&domains=${includeDomains.join(',')}`;
-    }
+    setSearchQuery(searchQuery);
+    setIsSearchOpen(true);
     
-    // Redirect to the search page with the query and optional domain filter
-    router.push(url);
-  };
+    setLoading(false);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setIsSearchOpen(false);
+  }, []);
 
   return (
     <Layout showHomeLink={false}>
       <HomePage onSearch={handleSearch} loading={loading} />
+      <SearchContainer 
+        isOpen={isSearchOpen} 
+        onClose={handleClose} 
+        initialQuery={searchQuery}
+      />
     </Layout>
   );
 }

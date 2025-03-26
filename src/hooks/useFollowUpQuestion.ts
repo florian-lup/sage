@@ -1,45 +1,43 @@
-import { useState } from "react";
+import { useState, useCallback, useRef } from "react";
 import { UseFollowUpQuestionResult } from "../types/hooks";
 import { SearchRequestBody } from "../types/api";
 import { SearchResponse } from "../types/search";
+import { useFetch } from "./useFetch";
 
 export function useFollowUpQuestion(): UseFollowUpQuestionResult {
   const [followUpQuery, setFollowUpQuery] = useState("");
   const [followUpAnswer, setFollowUpAnswer] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { loading: isLoading, fetchData } = useFetch<SearchResponse>();
+  const activeRequestRef = useRef(false);
 
-  const handleFollowUpQuestion = async (e: React.FormEvent) => {
+  const handleFollowUpQuestion = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!followUpQuery.trim()) return;
+    if (!followUpQuery.trim() || activeRequestRef.current) return;
     
-    setIsLoading(true);
-    try {
-      const requestBody: SearchRequestBody = {
-        query: followUpQuery,
-        isFollowUp: true
-      };
-      
-      const response = await fetch("/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-      
-      if (!response.ok) {
-        throw new Error("Failed to get answer");
-      }
-      
-      const data = await response.json() as SearchResponse;
-      setFollowUpAnswer(data.answer);
-    } catch (error) {
-      console.error("Error asking follow-up question:", error);
-    } finally {
-      setIsLoading(false);
-      setFollowUpQuery("");
+    // Track active request to prevent duplicates
+    activeRequestRef.current = true;
+    
+    const requestBody: SearchRequestBody = {
+      query: followUpQuery,
+      isFollowUp: true
+    };
+    
+    const result = await fetchData("/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+    
+    if (result) {
+      setFollowUpAnswer(result.answer);
     }
-  };
+    
+    setFollowUpQuery("");
+    // Reset active request tracker
+    activeRequestRef.current = false;
+  }, [followUpQuery, fetchData]);
 
   return {
     followUpQuery,

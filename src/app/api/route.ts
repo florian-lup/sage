@@ -8,7 +8,7 @@ let globalSearchEngine: SearchEngine | null = null;
 
 export async function POST(request: NextRequest) {
   try {
-    const { query, includeDomains, isFollowUp = false } = await request.json() as SearchRequestBody;
+    const { query, isFollowUp = false } = await request.json() as SearchRequestBody;
 
     if (!query || typeof query !== "string") {
       return NextResponse.json(
@@ -22,10 +22,11 @@ export async function POST(request: NextRequest) {
       globalSearchEngine = new SearchEngine();
     }
     
-    const result: SearchResponse = await globalSearchEngine.search(query, includeDomains, isFollowUp);
+    const result: SearchResponse = await globalSearchEngine.search(query, isFollowUp);
 
     return NextResponse.json(result);
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error("API error:", error);
     return NextResponse.json(
       { error: "An error occurred while processing the request." },
       { status: 500 }
