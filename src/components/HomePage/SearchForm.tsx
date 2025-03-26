@@ -91,7 +91,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Ask anything..."
-              className="flex-1 py-2.5 sm:py-3 px-2 sm:px-3 border-0 bg-transparent focus:outline-none focus:ring-0 text-sm sm:text-base placeholder:text-[var(--muted)]"
+              className="flex-1 py-2.5 sm:py-3 px-2 sm:px-3 border-0 bg-transparent focus:outline-none focus:ring-0 text-[16px] sm:text-base placeholder:text-[var(--muted)]"
               disabled={disabled}
             />
             <button

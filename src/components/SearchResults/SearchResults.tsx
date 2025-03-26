@@ -67,7 +67,7 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
                 value={followUpQuery}
                 onChange={(e) => setFollowUpQuery(e.target.value)}
                 placeholder="Ask a follow-up question..."
-                className="w-full px-3 sm:px-4 py-2 rounded-lg bg-[var(--secondary)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-2 rounded-lg bg-[var(--secondary)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] text-[16px] sm:text-base"
                 disabled={isLoading}
               />
               <button
