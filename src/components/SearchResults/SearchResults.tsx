@@ -42,15 +42,15 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
   }
 
   return (
-    <div className="space-y-8 mt-4">
+    <div className="space-y-6 sm:space-y-8 mt-4">
       {answer && (
-        <div className="backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 shadow-md">
+        <div className="backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-3 sm:p-4 shadow-md">
           <div className="mb-4">
             <div className="flex items-center mb-3">
-              <div className="h-6 w-6 rounded-full bg-[var(--primary)] flex items-center justify-center mr-2">
-                <BsQuestionCircleFill className="h-4 w-4 text-white" />
+              <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-[var(--primary)] flex items-center justify-center mr-2">
+                <BsQuestionCircleFill className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
               </div>
-              <span className="text-sm font-medium">Answer for: <span className="text-[var(--primary)]">{query}</span></span>
+              <span className="text-xs sm:text-sm font-medium">Answer for: <span className="text-[var(--primary)]">{query}</span></span>
             </div>
             <div className="prose prose-sm sm:prose max-w-none dark:prose-invert">
               <ReactMarkdown components={markdownComponents}>
@@ -60,14 +60,14 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
           </div>
           
           {/* Follow-up question input */}
-          <div className="mt-6 pt-4 border-t border-[var(--border)]">
+          <div className="mt-4 sm:mt-6 pt-4 border-t border-[var(--border)]">
             <form onSubmit={handleFollowUpQuestion} className="flex items-center">
               <input
                 type="text"
                 value={followUpQuery}
                 onChange={(e) => setFollowUpQuery(e.target.value)}
                 placeholder="Ask a follow-up question..."
-                className="w-full px-4 py-2 rounded-lg bg-[var(--secondary)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                className="w-full px-3 sm:px-4 py-2 rounded-lg bg-[var(--secondary)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] text-sm sm:text-base"
                 disabled={isLoading}
               />
               <button
@@ -76,9 +76,9 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
                 disabled={isLoading || !followUpQuery.trim()}
               >
                 {isLoading ? (
-                  <div className="h-5 w-5 rounded-full border-2 border-t-transparent border-white animate-spin"></div>
+                  <div className="h-4 w-4 sm:h-5 sm:w-5 rounded-full border-2 border-t-transparent border-white animate-spin"></div>
                 ) : (
-                  <IoSend className="h-5 w-5" />
+                  <IoSend className="h-4 w-4 sm:h-5 sm:w-5" />
                 )}
               </button>
             </form>
@@ -86,7 +86,7 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
           
           {/* Follow-up answer display */}
           {followUpAnswer && (
-            <div className="mt-6 pt-4 border-t border-[var(--border)]">
+            <div className="mt-4 sm:mt-6 pt-4 border-t border-[var(--border)]">
               <div className="prose prose-sm sm:prose max-w-none dark:prose-invert">
                 <ReactMarkdown components={markdownComponents}>
                   {followUpAnswer}
@@ -98,30 +98,30 @@ export default function SearchResults({ answer, sources, query = "" }: SearchRes
       )}
 
       {sources.length > 0 && (
-        <div className="backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 shadow-md">
+        <div className="backdrop-blur-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-3 sm:p-4 shadow-md">
           <div className="flex items-center mb-4">
-            <div className="h-6 w-6 rounded-full bg-[var(--secondary)] flex items-center justify-center mr-2">
-              <HiOutlineDocumentText className="h-4 w-4 text-[var(--muted)]" />
+            <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-[var(--secondary)] flex items-center justify-center mr-2">
+              <HiOutlineDocumentText className="h-3 w-3 sm:h-4 sm:w-4 text-[var(--muted)]" />
             </div>
-            <span className="text-sm font-medium text-[var(--muted)]">Web sources ({sources.length})</span>
+            <span className="text-xs sm:text-sm font-medium text-[var(--muted)]">Web sources ({sources.length})</span>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {sources.map((source, index) => (
               <a 
                 key={index} 
                 href={source.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="block hover:bg-[var(--secondary)] rounded-lg p-3 transition-colors"
+                className="block hover:bg-[var(--secondary)] rounded-lg p-2 sm:p-3 transition-colors"
               >
-                <div className="mb-1 text-[var(--primary)] text-sm font-medium line-clamp-1 hover:underline">
+                <div className="mb-1 text-[var(--primary)] text-xs sm:text-sm font-medium line-clamp-1 hover:underline">
                   {source.title || 'Untitled source'}
                 </div>
-                <div className="text-xs text-[var(--muted)] mb-2 line-clamp-1">
+                <div className="text-xs text-[var(--muted)] mb-1 sm:mb-2 line-clamp-1">
                   {source.url}
                 </div>
-                <div className="text-sm line-clamp-2 text-[var(--foreground)]">
+                <div className="text-xs sm:text-sm line-clamp-2 text-[var(--foreground)]">
                   {source.content.substring(0, 200)}
                   {source.content.length > 200 && '...'}
                 </div>
