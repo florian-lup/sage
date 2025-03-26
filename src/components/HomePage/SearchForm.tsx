@@ -69,7 +69,7 @@ export default function SearchForm({ onSearch, disabled = false }: SearchFormPro
           <p className="text-xs font-medium text-[var(--muted)]">Popular questions</p>
         </div>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 w-full">
           {suggestions.map((suggestion: string) => (
             <button
               key={suggestion}
