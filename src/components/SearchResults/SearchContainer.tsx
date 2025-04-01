@@ -7,6 +7,7 @@ import ErrorMessage from "./ErrorMessage";
 import { useSearch } from "../../hooks";
 import { IoMdClose } from "react-icons/io";
 import { SearchContainerProps } from "../../types/components";
+import Image from "next/image";
 
 export const SearchContainer = ({ 
   isOpen, 
@@ -69,7 +70,10 @@ export const SearchContainer = ({
           >
             {/* Header */}
             <div className="flex items-center justify-between px-3 sm:px-4 lg:px-6 py-2.5 sm:py-3 lg:py-4 border-b border-[var(--border)]">
-              <h2 className="text-sm sm:text-base font-medium text-[var(--foreground)] truncate max-w-[90%]">{initialQuery}</h2>
+              <div className="flex items-center gap-2">
+                <Image src="/logo.svg" alt="Sage Logo" width={20} height={20} className="w-5 h-5" />
+                <h2 className="text-sm sm:text-base font-medium text-[var(--foreground)] truncate max-w-[90%]">{initialQuery}</h2>
+              </div>
               <button
                 onClick={handleClose}
                 className="p-1 sm:p-1.5 hover:bg-[var(--secondary)] rounded-md transition-colors flex-shrink-0 cursor-pointer"

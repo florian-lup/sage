@@ -1,2 +1,2 @@
 // Model types
-export type AIModelType = "openai" | "gemini"; 
+export type AIModelType = "fireworks"; 

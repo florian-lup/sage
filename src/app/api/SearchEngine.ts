@@ -1,12 +1,10 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatFireworks } from "@langchain/community/chat_models/fireworks";
 import { TavilyClient } from "tavily";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { BaseChatModel } from "@langchain/core/language_models/chat_models";
 import { BufferMemory } from "langchain/memory";
 import { ConversationChain } from "langchain/chains";
 import { SearchResultItem, SearchResponse } from "../../types/search";
 import { TavilySearchParams } from "../../types/api";
-import { AIModelType } from "../../types/models";
 
 export class SearchEngine {
   private tavilyClient: TavilyClient;
@@ -23,24 +21,12 @@ export class SearchEngine {
     // Initialize memory
     this.memory = new BufferMemory();
 
-    // Determine which model to use based on environment variable
-    const modelType = (process.env.AI_MODEL?.toLowerCase() || 'openai') as AIModelType;
-    
-    // Initialize the selected LLM model
-    if (modelType === 'gemini') {
-      this.llmModel = new ChatGoogleGenerativeAI({
-        modelName: "gemini-2.0-flash",
-        temperature: 0.5,
-        apiKey: process.env.GOOGLE_API_KEY as string,
-      });
-    } else {
-      // Default to OpenAI
-      this.llmModel = new ChatOpenAI({
-        modelName: "gpt-4o",
-        temperature: 0.5,
-        openAIApiKey: process.env.OPENAI_API_KEY as string,
-      });
-    }
+    // Initialize Fireworks model
+    this.llmModel = new ChatFireworks({
+      modelName: "accounts/fireworks/models/llama-v3p3-70b-instruct", // Default model
+      temperature: 0.5,
+      fireworksApiKey: process.env.FIREWORKS_API_KEY as string,
+    });
 
     // Initialize conversation chain with memory
     this.chain = new ConversationChain({
