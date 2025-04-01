@@ -22,8 +22,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Sage - Search for information in English",
-  description: "Sage - AI search engine providing concise answers to questions in English",
+  title: "Sage",
+  description: "A conversational search engine that uses large language models to answer queries using sources from the web.",
   icons: {
     icon: '/favicon.ico',
   },
